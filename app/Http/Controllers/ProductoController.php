@@ -24,5 +24,25 @@ class ProductoController extends Controller
 
         return view('edit', compact('producto'));
     }
+
+    public function store(Request $request) 
+    {
+    // Valida los datos del formulario
+    $request->validate([
+        'nombre' => 'required|string',
+        'precio' => 'required|numeric',
+        'descripcion' => 'nullable|string'
+    ]);
+
+    // Crea un nuevo producto con los datos del formulario
+    Producto::create([
+        'nombre' => $request->nombre,
+        'precio' => $request->precio,
+        'descripcion' => $request->descripcion
+    ]);
+
+    // Redirige a alguna vista o a la página de inicio
+    return redirect('/productos');
+    }
 }
 
